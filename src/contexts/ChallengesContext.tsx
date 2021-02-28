@@ -33,16 +33,21 @@ interface ChallengesProviderProps {
 export const ChallengesContext = createContext({} as ChallengesContextData);
 
 export function ChallengesProvider({ children, ...rest }: ChallengesProviderProps) {
-  const [level, setLevel] = useState(rest.level ?? 1);
-  const [currentExperience, setCurrentExperience] = useState(rest.currentExperience ?? 0);
-  const [challengesCompleted, setChallengesCompleted] = useState(rest.challengesCompleted ?? 0);
+  const [level, setLevel] = useState(rest.level);
+  const [currentExperience, setCurrentExperience] = useState(rest.currentExperience);
+  const [challengesCompleted, setChallengesCompleted] = useState(rest.challengesCompleted);
 
   const [activeChallenge, setActiveChallenge] = useState(null);
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false)
 
+  const [challengesContent, setChallengesContent] = useState(null)
+
   const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
 
   useEffect(() => {
+    
+    if ('Notification' in window && Notification.permission == 'default'
+    )
     Notification.requestPermission();
   }, []);
 
@@ -68,13 +73,21 @@ export function ChallengesProvider({ children, ...rest }: ChallengesProviderProp
 
     setActiveChallenge(challenge);
 
-    new Audio("/notification.mp3").play();
+    if (Notification?.permission == "granted") {
+      if ('Audio' in window) new Audio("/notification.mp3").play();
 
-    if (Notification.permission === "granted" && screen.width > 720) {
-      new Notification("Novo desafio 🎉", {
-        body: `Valendo ${challenge.amount}xp!`,
-      });
+      (new Notification("🎁 Novo desafio 🎉", {
+        body: `Valendo ${challenge.amount}xp`,
+        icon: 'favicon.png',
+        requireInteraction: true,
+        vibrate: [200, 200, 200]
+      })) .onclick = () => focus()
+
     }
+setChallengesContent(challenge)
+
+    
+
   }
 
   function resetChallenge() {
