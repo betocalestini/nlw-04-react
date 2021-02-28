@@ -7,9 +7,9 @@ export function Profile() {
 
   return (
     <div className={styles.profileContainer}>
-      <img src="https://github.com/betocalestini.png" alt="profile picture" />
+      <img src="coding.svg" alt="profile picture" />
       <div>
-        <strong>Roberto Calestini</strong>
+        <strong>Desafiante</strong>
         <p>
         <img src="icons/level.svg" alt=""/>
           

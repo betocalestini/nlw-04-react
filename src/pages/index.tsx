@@ -36,12 +36,12 @@ export default function Home(props: HomeProps) {
       <ExperienceBar />
       <CountdownProvider>
         <section>
-          <div>
+          <div className={styles.containerActionProfile}>
             <Profile />
             <CompletedChallenges />
             <Countdown />
           </div>
-          <div>
+          <div className={styles.containerChallenge}>
             <ChallengeBox />
           </div>
         </section>
