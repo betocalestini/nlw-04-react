@@ -40,7 +40,6 @@ export function ChallengesProvider({ children, ...rest }: ChallengesProviderProp
   const [activeChallenge, setActiveChallenge] = useState(null);
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false)
 
-  const [challengesContent, setChallengesContent] = useState(null)
 
   const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
 
@@ -73,7 +72,7 @@ export function ChallengesProvider({ children, ...rest }: ChallengesProviderProp
 
     setActiveChallenge(challenge);
 
-    if (Notification?.permission == "granted") {
+    if (Notification?.permission === "granted" && screen.width > 720) {
       if ('Audio' in window) new Audio("/notification.mp3").play();
 
       (new Notification("🎁 Novo desafio 🎉", {
@@ -84,7 +83,6 @@ export function ChallengesProvider({ children, ...rest }: ChallengesProviderProp
       })) .onclick = () => focus()
 
     }
-setChallengesContent(challenge)
 
     
 
